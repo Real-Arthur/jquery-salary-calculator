@@ -1,32 +1,31 @@
 console.log('I am JS')
+let employees = [];
 
 $(document).ready(readyNow);
 
 function readyNow() {
 console.log(`It's a me. jQuery.`)
 addInputForm();
+
+$(document).on('click', '#submitButton', submitInputs);
 }
 
 // Add form to html
 function addInputForm() {
-    //Add form
-    $('body').append(`<form></form>`);
+    $('body').append(`<h1>Add Employee</h1>`)
     console.log('this is doing something');
-    //add first name to form
-    $('form').append(`<label for="firstName">First Name</label>
-    <input id="firstNameInput" name="firstName"></input>`);
+    //add first name
+    $('body').append(`<input id="firstNameInput" placeholder="First Name"></input>`);
     
-    $('form').append(`<label for="lastName">Last Name</label>
-    <input id="lastNameInput" name="lastName"></input>`);
-    
-    $('form').append(`<label for="idNumber">ID</label>
-    <input id="idNumberInput" name="idNumber"></input>`);
-    
-    $('form').append(`<label for="jobTitle">Title</label>
-    <input id="jobTitleInput" name="jobTitle"></input>`);
-    
-    $('form').append(`<label for="annualSalary">Annual Salary</label>
-    <input id="AnnualSalaryInput" name="annualSalary"></input>`);
+    $('body').append(`<button id="submitButton">Submit</button>`);
 
-    $('form').append(`<input type="submit" value="Submit"`)
 }
+
+function submitInputs() {
+    console.log($('#firstNameInput').val());
+   let newEmployeeInfo = {
+       name: $('#firstNameInput').val()
+   }
+   employees.push(newEmployeeInfo);
+}
+
