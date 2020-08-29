@@ -8,6 +8,7 @@ function readyNow() {
 console.log(`It's a me. jQuery.`)
 addInputForm();
 blankTable();
+
 $(document).on('click', '#submitButton', submitInputs);
 }
 
@@ -24,20 +25,32 @@ function addInputForm() {
     //add submit
     $('body').append(`<button id="submitButton">Submit</button>`);
 }
+
 function submitInputs() {
     let employeeFirstName =  $('#firstNameInput').val()
     let employeeLastName =  $('#lastNameInput').val();
     let employeeId =  $('#idNumber').val();
     let employeeTitle =  $('#jobTitle').val();
-    let employeeSalary =  $('#annualSalary').val();
+    let employeeSalary =  parseInt($('#annualSalary').val());
     //
+//    let newEmployeeInfo = {
+//        firstName: $('#firstNameInput').val(),
+//        lastName: $('#lastNameInput').val(),
+//        id: $('#idNumber').val(),
+//        title: $('#jobTitle').val(),
+//        salary: $('#annualSalary').val()
+//    }   
+   
    let newEmployeeInfo = {
-       firstName: $('#firstNameInput').val(),
-       lastName: $('#lastNameInput').val(),
-       id: $('#idNumber').val(),
-       title: $('#jobTitle').val(),
-       salary: $('#annualSalary').val()
+       firstName: employeeFirstName,
+       lastName: employeeLastName,
+       id: employeeId,
+       title: employeeTitle,
+       salary: employeeSalary
    }
+
+   newEmployeeInfo.monthlySalary = Math.round(employeeSalary / 12);
+
    //Add Employee Info to Array of Employees
    employees.push(newEmployeeInfo);
    //Add Info to Table
@@ -48,6 +61,9 @@ function submitInputs() {
    <td>${employeeTitle}</td>
    <td>${employeeSalary}</td>
    </tr>`)
+
+   
+    calculateMonthlyExpenses();
    //Clear Fields
    emptyFields();
 }
@@ -61,6 +77,10 @@ function blankTable() {
     $('tr').append(`<th>Title</th>`)
     $('tr').append(`<th>Salary</th>`)
     $('tr').append(`<th></th>`)
+
+
+    
+    $('html').append(`<footer id="footer" class="footer">Total Monthly: $0</footer>`)
 }
 function emptyFields() {
     $('#firstNameInput').val("");
@@ -68,4 +88,13 @@ function emptyFields() {
     $('#idNumber').val("");
     $('#jobTitle').val("");
     $('#annualSalary').val("");
+}
+
+function calculateMonthlyExpenses() {
+    let monthlyExpenses = 0;
+    for(employee of employees) {
+        monthlyExpenses += employee.monthlySalary;
+    }
+    console.log(monthlyExpenses);
+    $('footer').text(`Total Monthly: $${monthlyExpenses}`)
 }
