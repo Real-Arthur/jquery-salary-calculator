@@ -97,4 +97,8 @@ function calculateMonthlyExpenses() {
     }
     console.log(monthlyExpenses);
     $('footer').text(`Total Monthly: $${monthlyExpenses}`)
+    
+    if(monthlyExpenses > 20000) {
+        $('footer').css('background', 'red');
+    }
 }
