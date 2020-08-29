@@ -10,6 +10,8 @@ addInputForm();
 blankTable();
 
 $(document).on('click', '#submitButton', submitInputs);
+$(document).on('click', '.deleteBtn', deleteEmployee);
+
 }
 
 // Add form to html
@@ -54,14 +56,17 @@ function submitInputs() {
    //Add Employee Info to Array of Employees
    employees.push(newEmployeeInfo);
    //Add Info to Table
-   $('table').append(`<tr>
+   $('table').append(`
+   <tr>
    <td>${employeeFirstName}</td>
    <td>${employeeLastName}</td>
    <td>${employeeId}</td>
    <td>${employeeTitle}</td>
    <td>${employeeSalary}</td>
-   </tr>`)
-
+   <td class="delete"><td>
+   </tr>`
+   )
+   $('.delete').append(`<button class="deleteBtn">Delete</button>`)
    
     calculateMonthlyExpenses();
    //Clear Fields
@@ -101,4 +106,9 @@ function calculateMonthlyExpenses() {
     if(monthlyExpenses > 20000) {
         $('footer').css('background', 'red');
     }
+}
+
+function deleteEmployee() {
+    console.log('delete button a go')
+    $(this).closest('tr').remove();
 }
