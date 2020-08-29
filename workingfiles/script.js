@@ -4,9 +4,10 @@ let employees = [];
 $(document).ready(readyNow);
 
 function readyNow() {
+
 console.log(`It's a me. jQuery.`)
 addInputForm();
-
+blankTable();
 $(document).on('click', '#submitButton', submitInputs);
 }
 
@@ -23,14 +24,13 @@ function addInputForm() {
     //add submit
     $('body').append(`<button id="submitButton">Submit</button>`);
 }
-
 function submitInputs() {
-    console.log($('#firstNameInput').val());
-    console.log($('#lastNameInput').val());
-    console.log($('#idNumber').val());
-    console.log($('#jobTitle').val());
-    console.log($('#annualSalary').val());
-
+    let employeeFirstName =  $('#firstNameInput').val()
+    let employeeLastName =  $('#lastNameInput').val();
+    let employeeId =  $('#idNumber').val();
+    let employeeTitle =  $('#jobTitle').val();
+    let employeeSalary =  $('#annualSalary').val();
+    //
    let newEmployeeInfo = {
        firstName: $('#firstNameInput').val(),
        lastName: $('#lastNameInput').val(),
@@ -38,7 +38,34 @@ function submitInputs() {
        title: $('#jobTitle').val(),
        salary: $('#annualSalary').val()
    }
-
+   //Add Employee Info to Array of Employees
    employees.push(newEmployeeInfo);
+   //Add Info to Table
+   $('table').append(`<tr>
+   <td>${employeeFirstName}</td>
+   <td>${employeeLastName}</td>
+   <td>${employeeId}</td>
+   <td>${employeeTitle}</td>
+   <td>${employeeSalary}</td>
+   </tr>`)
+   //Clear Fields
+   emptyFields();
 }
-
+function blankTable() {
+    $('body').append(`<h2>Employees</h2>`)
+    $('body').append(`<table></table>`)
+    $('table').append(`<tr></tr>`)
+    $('tr').append(`<th>First Name</th>`)
+    $('tr').append(`<th>Last Name</th>`)
+    $('tr').append(`<th>ID</th>`)
+    $('tr').append(`<th>Title</th>`)
+    $('tr').append(`<th>Salary</th>`)
+    $('tr').append(`<th></th>`)
+}
+function emptyFields() {
+    $('#firstNameInput').val("");
+    $('#lastNameInput').val("");
+    $('#idNumber').val("");
+    $('#jobTitle').val("");
+    $('#annualSalary').val("");
+}
