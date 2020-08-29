@@ -66,7 +66,7 @@ function submitInputs() {
    <td class="delete"><td>
    </tr>`
    )
-   $('.delete').append(`<button class="deleteBtn">Delete</button>`)
+   $('tr:last-child').append(`<button class="deleteBtn">Delete</button>`)
    
     calculateMonthlyExpenses();
    //Clear Fields
