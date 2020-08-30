@@ -38,21 +38,16 @@ function addInputForm() {
 }
 
 function submitInputs() {
+    // Reassign input values to english
     let employeeFirstName = $('#firstNameInput').val()
     let employeeLastName = $('#lastNameInput').val();
     let employeeId = $('#idNumber').val();
     let employeeTitle = $('#jobTitle').val();
+    // Make salary into number
     let employeeSalary = parseInt($('#annualSalary').val());
+    // Calculate salary per month of 'this' employee
     $(this).data('mySalary', Math.round(employeeSalary / 12));
-    //
-    //    let newEmployeeInfo = {
-    //        firstName: $('#firstNameInput').val(),
-    //        lastName: $('#lastNameInput').val(),
-    //        id: $('#idNumber').val(),
-    //        title: $('#jobTitle').val(),
-    //        salary: $('#annualSalary').val()
-    //    }   
-
+    // Make employees into objects
     let newEmployeeInfo = {
         firstName: employeeFirstName,
         lastName: employeeLastName,
@@ -60,26 +55,38 @@ function submitInputs() {
         title: employeeTitle,
         salary: employeeSalary
     }
-
+    // Calculate monthly salary
     newEmployeeInfo.monthlySalary = Math.round(employeeSalary / 12);
-
     //Add Employee Info to Array of Employees
     employees.push(newEmployeeInfo);
     //Add Info to Table
     $('table').append(`
    <tr>
-   <td>${employeeFirstName}</td>
-   <td>${employeeLastName}</td>
-   <td>${employeeId}</td>
-   <td>${employeeTitle}</td>
-   <td class="compensation">${employeeSalary}</td>
-   <td class="delete"></td>
+   <td>
+        ${employeeFirstName}
+   </td>
+   <td>
+        ${employeeLastName}
+   </td>
+   <td>
+        ${employeeId}
+   </td>
+   <td>
+        ${employeeTitle}
+   </td>
+   <td class="compensation">
+        ${employeeSalary}
+   </td>
+   <td class="delete">
+   </td>
    </tr>
-   `)
+   `) // End of table info
+   // Add delete button to row as needed
     $('.delete').empty().append(`<button class="deleteBtn">Delete</button>`);
+    // Plug 'this' employees monthly salary into addToExpenses function
     console.log($(this).data('mySalary'));
     addToExpense($(this).data('mySalary'));
-    // calculateMonthlyExpenses();
+
     //Clear Fields
     emptyFields();
 }
@@ -94,6 +101,8 @@ function blankTable() {
     $('tr').append(`<th>Title</th>`)
     $('tr').append(`<th>Salary</th>`)
     $('tr').append(`<th></th>`)
+
+    // $('table tr:last').after(`<tr><td class="blankRow" colspan="6"></td></tr>`)
     
 
 

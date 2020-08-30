@@ -6,10 +6,29 @@ h1 {
 
 table {
     border-collapse: collapse;
+    width: 90%;
     
 }
+table th {
+    background-color: lightgray;
+}
+
+th:last-child {
+    width: 50px;
+}
+
+table tr {
+    border: 2px solid black;
+}
+
+.blankRow {
+    height: 20px;
+}
+
 table, th, td {
     border: 2px solid black;
+    padding: 5px 15px;
+    text-align: left;
 }
 
 footer {
