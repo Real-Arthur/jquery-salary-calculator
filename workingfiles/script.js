@@ -74,8 +74,9 @@ function submitInputs() {
    <td>${employeeTitle}</td>
    <td class="compensation">${employeeSalary}</td>
    <td class="delete"></td>
-   </tr>`)
-    $('tr:last-child').text(`<button class="deleteBtn">Delete</button>`);
+   </tr>
+   `)
+    $('.delete').empty().append(`<button class="deleteBtn">Delete</button>`);
     console.log($(this).data('mySalary'));
     addToExpense($(this).data('mySalary'));
     // calculateMonthlyExpenses();
