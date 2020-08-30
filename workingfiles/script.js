@@ -34,6 +34,7 @@ function submitInputs() {
     let employeeId =  $('#idNumber').val();
     let employeeTitle =  $('#jobTitle').val();
     let employeeSalary =  parseInt($('#annualSalary').val());
+    $(this).data('mySalary', Math.round(employeeSalary / 12));
     //
 //    let newEmployeeInfo = {
 //        firstName: $('#firstNameInput').val(),
@@ -52,7 +53,7 @@ function submitInputs() {
    }
 
    newEmployeeInfo.monthlySalary = Math.round(employeeSalary / 12);
-
+   
    //Add Employee Info to Array of Employees
    employees.push(newEmployeeInfo);
    //Add Info to Table
@@ -62,13 +63,14 @@ function submitInputs() {
    <td>${employeeLastName}</td>
    <td>${employeeId}</td>
    <td>${employeeTitle}</td>
-   <td>${employeeSalary}</td>
+   <td class="compensation">${employeeSalary}</td>
    <td class="delete"><td>
    </tr>`
    )
-   $('tr:last-child').append(`<button class="deleteBtn">Delete</button>`)
-   
-    calculateMonthlyExpenses();
+   $('tr:last-child').append(`<button class="deleteBtn">Delete</button>`);
+   console.log($(this).data('mySalary'));
+   addToExpense($(this).data('mySalary'));
+    // calculateMonthlyExpenses();
    //Clear Fields
    emptyFields();
 }
@@ -94,21 +96,47 @@ function emptyFields() {
     $('#jobTitle').val("");
     $('#annualSalary').val("");
 }
+let monthlyExpenses = 0;
 
 function calculateMonthlyExpenses() {
-    let monthlyExpenses = 0;
     for(employee of employees) {
         monthlyExpenses += employee.monthlySalary;
     }
     console.log(monthlyExpenses);
-    $('footer').text(`Total Monthly: $${monthlyExpenses}`)
+    $('footer').data(`monthly`, `${monthlyExpenses}`);
+    let salaryData = $('footer').data('monthly');
+    $('footer').text(`Total Monthly: $${salaryData}`)
     
-    if(monthlyExpenses > 20000) {
+    if(salaryData > 20000) {
         $('footer').css('background', 'red');
     }
+    return monthlyExpenses;
 }
 
+function addToExpense(value) {
+    monthlyExpenses += value;
+
+    // might work
+    $('footer').data(`monthly`, `${monthlyExpenses}`);
+    let salaryData = $('footer').data('monthly');
+    $('footer').text(`Total Monthly: $${salaryData}`)
+    if(monthlyExpenses > 20000) {
+        $('footer').css('background', 'red');
+    } else {
+        $('footer').css('background', 'white');
+    }
+    //
+
+    return monthlyExpenses;
+}
+
+
 function deleteEmployee() {
+    let inside = parseInt($(this).siblings('.compensation').text());
+    let salary = Math.round(-(inside / 12));
     console.log('delete button a go')
     $(this).closest('tr').remove();
+    console.log(salary);
+    addToExpense(salary);
+    
 }
