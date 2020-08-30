@@ -1,6 +1,8 @@
 console.log('I am JS')
+// GLOBALS!
 let employees = [];
-
+let monthlyExpenses = 0;
+// END OF GLOBALS!
 $(document).ready(readyNow);
 
 function readyNow() {
@@ -13,7 +15,6 @@ function readyNow() {
     $(document).on('click', '.deleteBtn', deleteEmployee);
 
 }
-
 // Add form to html
 function addInputForm() {
     $('body').append(`
@@ -27,13 +28,13 @@ function addInputForm() {
     </h2>
     `)
     console.log('this is doing something');
-    //add inputs
+    //add input fields
     $('body').append(`<input id="firstNameInput" placeholder="First Name"></input>`);
     $('body').append(`<input id="lastNameInput" placeholder="Last Name"></input>`);
     $('body').append(`<input id="idNumber" placeholder="ID"></input>`);
     $('body').append(`<input id="jobTitle" placeholder="Title"></input>`);
     $('body').append(`<input id="annualSalary" placeholder="Salary"></input>`);
-    //add submit
+    //add submit button
     $('body').append(`<button id="submitButton">Submit</button>`);
 }
 
@@ -81,33 +82,48 @@ function submitInputs() {
    </td>
    </tr>
    `) // End of table info
-   // Add delete button to row as needed
+    // Add delete button to row as needed
     $('.delete').empty().append(`<button class="deleteBtn">Delete</button>`);
     // Plug 'this' employees monthly salary into addToExpenses function
-    console.log($(this).data('mySalary'));
+    console.log(`Monthly salary is: $${$(this).data('mySalary')}`);
     addToExpense($(this).data('mySalary'));
-
     //Clear Fields
     emptyFields();
 }
 
 function blankTable() {
-    $('body').append(`<h2>Employees</h2>`)
+    // Table framework made on document load
+    $('body').append(`<h2>
+    Employees
+    </h2>`)
     $('body').append(`<table></table>`)
     $('table').append(`<tr></tr>`)
-    $('tr').append(`<th>First Name</th>`)
-    $('tr').append(`<th>Last Name</th>`)
-    $('tr').append(`<th>ID</th>`)
-    $('tr').append(`<th>Title</th>`)
-    $('tr').append(`<th>Salary</th>`)
+    $('tr').append(`
+    <th>
+        First Name
+    </th>`)
+    $('tr').append(`
+    <th>
+        Last Name
+    </th>`)
+    $('tr').append(`
+    <th>
+        ID
+    </th>`)
+    $('tr').append(`
+    <th>
+        Title
+    </th>`)
+    $('tr').append(`
+    <th>
+        Salary
+    </th>`)
     $('tr').append(`<th></th>`)
-
-    // $('table tr:last').after(`<tr><td class="blankRow" colspan="6"></td></tr>`)
-    
-
-
-
-    $('html').append(`<footer id="footer" class="footer">Total Monthly: $0</footer>`)
+    // Monthly earnings footer
+    $('html').append(`
+    <footer id="footer" class="footer">
+        Total Monthly: $0
+    </footer>`)
 }
 
 function emptyFields() {
@@ -117,17 +133,18 @@ function emptyFields() {
     $('#jobTitle').val("");
     $('#annualSalary').val("");
 }
-let monthlyExpenses = 0;
 
 function calculateMonthlyExpenses() {
+    // Add employees monthly costs together
     for (employee of employees) {
         monthlyExpenses += employee.monthlySalary;
     }
     console.log(monthlyExpenses);
+    // Update footer info
     $('footer').data(`monthly`, `${monthlyExpenses}`);
     let salaryData = $('footer').data('monthly');
     $('footer').text(`Total Monthly: $${salaryData}`)
-
+    // Change DOM if salaries are too high
     if (salaryData > 20000) {
         $('footer').css('background', 'red');
     }
@@ -135,29 +152,34 @@ function calculateMonthlyExpenses() {
 }
 
 function addToExpense(value) {
+    // Add inputted values to monthly expenses
     monthlyExpenses += value;
-
-    // might work
+    // Update footer info
     $('footer').data(`monthly`, `${monthlyExpenses}`);
+    // Set monthly salary for accessibility
     let salaryData = $('footer').data('monthly');
+    // Modify footer output
     $('footer').text(`Total Monthly: $${salaryData}`)
+    // Change DOM if salaries are too high
     if (monthlyExpenses > 20000) {
         $('footer').css('background', 'red');
     } else {
         $('footer').css('background', 'white');
     }
     //
-
     return monthlyExpenses;
 }
 
-
 function deleteEmployee() {
-    let inside = parseInt($(this).siblings('.compensation').text());
+    // Find 'this' elements annual salary
+    let inside = parseInt($(this).parent().siblings('.compensation').text());
+    console.log('inside', inside)
+    // Calculate monthly salary
     let salary = Math.round(-(inside / 12));
     console.log('delete button a go')
+    // Delete row  
     $(this).closest('tr').remove();
-    console.log(salary);
+    console.log('salary is', salary);
+    // Modify expenses with monthly salary value
     addToExpense(salary);
-
 }
