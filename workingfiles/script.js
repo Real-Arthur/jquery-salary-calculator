@@ -134,6 +134,8 @@ function emptyFields() {
     $('#annualSalary').val("");
 }
 
+// NOT USED. FOR REFERENCE
+/*
 function calculateMonthlyExpenses() {
     // Add employees monthly costs together
     for (employee of employees) {
@@ -150,6 +152,7 @@ function calculateMonthlyExpenses() {
     }
     return monthlyExpenses;
 }
+*/
 
 function addToExpense(value) {
     // Add inputted values to monthly expenses
