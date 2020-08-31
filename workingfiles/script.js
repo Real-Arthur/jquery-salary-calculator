@@ -162,9 +162,9 @@ function addToExpense(value) {
     $('footer').text(`Total Monthly: $${salaryData}`)
     // Change DOM if salaries are too high
     if (monthlyExpenses > 20000) {
-        $('footer').css('background', 'red');
+        $('footer').addClass('overMax');
     } else {
-        $('footer').css('background', 'white');
+        $('footer').removeClass('overMax');
     }
     //
     return monthlyExpenses;

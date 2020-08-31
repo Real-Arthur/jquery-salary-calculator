@@ -40,3 +40,7 @@ footer {
 input {
     margin: 5px;
 }
+
+.overMax {
+    background-color: red;
+}
